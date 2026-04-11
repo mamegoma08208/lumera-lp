@@ -12,9 +12,12 @@
   --gray: #6B6B6B;
   --gray-light: #9A9A9A;
   --white: #FFFFFF;
-  /* LINE公式ブランドグリーン（CTAボタン用） */
+  /* LINE公式ブランドグリーン（CTA左アイコン用） */
   --line-green: #06C755;
   --line-green-hover: #059A4A;
+  /* CTAボタン：濃い茶（モバイルデザイン準拠） */
+  --btn-brand: #2B1E16;
+  --btn-brand-hover: #3A2A22;
   --font-jp:"Noto Sans JP", sans-serif;
   --font-min:"Noto Serif JP", serif;
   --font-en:"Cormorant Garamond", serif;
@@ -109,79 +112,91 @@ iframe {
   width: min(calc(100% - 40rem),1200rem);
   margin: auto;
 }
+/* LINE CTA：濃茶ボディ＋左にLINE緑スクエア＋右矢印（サイト共通） */
 .btn {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: min(100%,390rem);
-  height: 68rem;
+  width: min(100%, 390rem);
+  min-height: 68rem;
+  padding: 12rem 52rem 12rem 50rem;
   position: relative;
-  color: #fff;
-  background: var(--line-green);
+  box-sizing: border-box;
+  color: var(--white);
+  background: var(--btn-brand);
+  font-family: var(--font-jp);
   font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: 16rem;
+  letter-spacing: 0.06em;
+  line-height: 1.35;
+  text-decoration: none;
+  border-radius: 10rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+  /* 予約ボタン共通：極薄の白ハロー */
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 2px 10px rgba(255, 255, 255, 0.14),
+    0 1px 4px rgba(255, 253, 248, 0.12);
 }
+/* LINEアイコン風スクエア（やや小さめ） */
 .btn::before {
-  content: '';
+  content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
-  background-size: 200% 100%;
-  animation: shimmer 3s linear infinite;
+  left: 16rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26rem;
+  height: 26rem;
+  border-radius: 4rem;
+  background: var(--line-green);
+  flex-shrink: 0;
+  pointer-events: none;
 }
 .btn::after {
   content: "→";
   position: absolute;
   top: 50%;
-  margin: auto;
-  right: 24rem;
+  right: 22rem;
   transform: translateY(-50%);
-  transition: .3s;
+  font-size: 1.1em;
+  font-weight: 500;
+  color: var(--white);
+  transition: transform 0.25s ease;
+  pointer-events: none;
 }
 .btn:hover {
-  background: var(--line-green-hover);
+  background: var(--btn-brand-hover);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 3px 14px rgba(255, 255, 255, 0.18),
+    0 1px 5px rgba(255, 253, 248, 0.14);
 }
 .btn:hover::after {
-  transform: translateY(-50%) translateX(8rem);
+  transform: translateY(-50%) translateX(6rem);
 }
-.btn span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 1.3;
-  font-size: 12rem;
-  font-weight: 600;
-  width: 50rem;
-  height: 50rem;
-  border-radius: 50%;
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 24rem;
-  transform: translateY(-50%);
-  background: var(--white);
-  color: var(--line-green);
-  box-shadow: 0 2rem 4rem rgba(0, 0, 0, .2);
-  border: var(--line-green) 1rem solid;
-}
-@keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
+/* 旧デザインの「簡単30秒」バッジは非表示（マークアップ互換のため残置可） */
+.btn > span {
+  display: none !important;
 }
 @media only screen and (max-width: 767px) {
   .btn {
-    height: 64rem;
-    padding-left: 20rem;
+    min-height: 64rem;
+    padding: 10rem 44rem 10rem 44rem;
+    font-size: 15rem;
+  }
+  .btn::before {
+    left: 12rem;
+    width: 24rem;
+    height: 24rem;
+    border-radius: 3rem;
   }
   .btn::after {
-    right: 8rem;
+    right: 16rem;
   }
   .btn:hover::after {
     transform: translateY(-50%);
-  }
-  .btn span {
-    font-size: 11rem;
-    left: 8rem;
   }
 }
 .ttl {
@@ -297,19 +312,53 @@ header {
   border-bottom: 1px solid rgba(196, 162, 101, 0.15);
 }
 header .logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: auto;
+  line-height: 1.12;
+  color: var(--black-soft);
+}
+header .logo__name {
   font-family: var(--font-en);
   font-size: 24rem;
   font-weight: 500;
   letter-spacing: 0.15em;
-  margin-right: auto;
 }
-header .logo:hover {
+header .logo__branch {
+  font-family: var(--font-jp);
+  font-size: 9rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  color: var(--black-soft);
+  margin-top: 3rem;
+  opacity: 0.92;
+}
+header .logo:hover .logo__name {
   color: var(--gold);
 }
+header .logo:hover .logo__branch {
+  color: var(--gold);
+  opacity: 1;
+}
 header .btn {
-  width: 200rem;
-  height: 48rem;
-  font-size: 14rem;
+  width: auto;
+  min-width: 188rem;
+  max-width: min(280rem, calc(100vw - 240rem));
+  min-height: 48rem;
+  height: auto;
+  font-size: 13rem;
+  padding: 8rem 38rem 8rem 38rem;
+}
+header .btn::before {
+  left: 10rem;
+  width: 21rem;
+  height: 21rem;
+  border-radius: 3rem;
+}
+header .btn::after {
+  right: 12rem;
+  font-size: 12rem;
 }
 .gnav {
   display: flex;
@@ -338,14 +387,32 @@ header .btn {
     height: 64rem;
     padding: 0 0 0 16rem;
   }
-  header .logo {
+  header .logo__name {
     font-size: 18rem;
   }
+  header .logo__branch {
+    font-size: 7rem;
+    letter-spacing: 0.16em;
+    margin-top: 2rem;
+  }
   header .btn {
-    width: 140rem;
-    height: 36rem;
-    font-size: 12rem;
-    padding-left: 0;
+    min-width: 0;
+    max-width: calc(100vw - 148rem);
+    min-height: 40rem;
+    font-size: 11rem;
+    letter-spacing: 0.04em;
+    padding: 6rem 30rem 6rem 32rem;
+    text-align: center;
+  }
+  header .btn::before {
+    left: 7rem;
+    width: 18rem;
+    height: 18rem;
+    border-radius: 3rem;
+  }
+  header .btn::after {
+    right: 10rem;
+    font-size: 11rem;
   }
   .gnav {
     display: none;
@@ -429,7 +496,7 @@ header .btn {
     font-size: 16rem;
   }
   .spnav .btns li .btn::after {
-    right: 18rem;
+    right: 16rem;
   }
 }
 /* -------------------------------------------------------------------------- FOOTER */
@@ -553,132 +620,144 @@ footer .copy {
   }
 }
 /* -------------------------------------------------------------------------- CONTENTS */
+/* MV：モバイルデザイン準拠の階層（番号付きカード → タグライン → 見出し → CTA）。PC も同一構成で調整 */
 .mv {
   width: 100%;
-  height: 800rem;
+  min-height: max(720rem, calc(100dvh - 72rem));
+  height: auto;
   overflow: hidden;
   position: relative;
   z-index: 1;
 }
 .mv .inner {
-  width: calc(100% - 40rem);
+  width: min(calc(100% - 40rem), 1200rem);
+  margin: 0 auto;
   height: 100%;
+  min-height: inherit;
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  position: relative;
+  z-index: 1;
 }
 .mv .txt {
-  width: 800rem;
+  width: 100%;
+  max-width: 560rem;
+  margin: 0 auto;
   position: relative;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  /* ブロックをエリア下寄せ（モック：カード〜CTAがまとまって下側） */
+  justify-content: flex-end;
+  align-items: stretch;
+  min-height: max(640rem, calc(100dvh - 72rem - 48rem));
+  padding: 24rem 0 28rem;
+  box-sizing: border-box;
 }
-.mv h1 {
+/* タグライン直上・相似比（--mv-s）。0.75 = 従来 0.6 の 1.25 倍でボックス・文字とも相似拡大 */
+.mv-card {
+  --mv-s: 0.75;
+  width: min(calc(60vw * var(--mv-s)), 100%);
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: 0;
+  margin-bottom: calc(10rem * var(--mv-s));
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: calc(12rem * var(--mv-s));
+  padding: calc(6rem * var(--mv-s)) calc(16rem * var(--mv-s)) calc(8rem * var(--mv-s));
+  box-shadow:
+    0 1px calc(18rem * var(--mv-s)) rgba(43, 30, 22, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.9);
+}
+.mv-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.mv-card .mv-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(14rem * var(--mv-s));
+  padding: calc(12rem * var(--mv-s)) 0;
+  border-bottom: 1px solid rgba(43, 30, 22, 0.1);
+  font-family: var(--font-jp);
+  font-size: calc(15rem * var(--mv-s));
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
   color: var(--black-soft);
-  font-family: var(--font-en);
-  font-size: 46rem;
-  font-weight: 540;
-  letter-spacing: 0.15em;
-  line-height: 1.6;
-  margin-bottom: 42rem;
-  text-shadow:
-    0 0 1px rgba(255, 255, 255, 0.95),
-    0 1px 3px rgba(255, 255, 255, 0.82),
-    0 0 36px rgba(255, 252, 246, 0.62),
-    0 3px 16px rgba(0, 0, 0, 0.08);
 }
-.mv h1 b {
-  display: block;
+/* 02：× の直後で改行（マークアップの br 固定） */
+.mv-features__txt--pilates {
+  word-break: keep-all;
+}
+/* 03：幅が足りないときだけ「から」の直後で改行 */
+.mv-features__txt--access {
+  word-break: keep-all;
+}
+.mv-features__access-pre {
+  white-space: nowrap;
+}
+.mv-card .mv-features li:last-child {
+  border-bottom: none;
+  padding-bottom: calc(8rem * var(--mv-s));
+}
+.mv-card .mv-features__num {
+  flex: 0 0 auto;
   font-family: var(--font-en);
-  font-size: 22rem;
-  font-weight: 450;
+  font-size: calc(20rem * var(--mv-s));
+  font-weight: 600;
+  line-height: 1;
   color: var(--gold);
-  text-shadow:
-    0 0 1px rgba(255, 252, 235, 0.95),
-    0 1px 2px rgba(212, 180, 130, 0.45),
-    0 0 26px rgba(255, 244, 220, 0.55),
-    0 2px 12px rgba(62, 47, 30, 0.2);
+  min-width: calc(36rem * var(--mv-s));
 }
-.mv h1 strong {
+.mv-features__txt {
+  flex: 1;
+  min-width: 0;
+}
+.mv-lower {
+  flex: 0 0 auto;
+  width: 100%;
+  padding-top: 0;
+  /* コピー先頭と番号カードの縦位置の共通基準 */
+  --mv-align-top: 60%;
+}
+/* SP：ラッパーを無視して従来どおりの縦並び */
+.mv-copy {
+  display: contents;
+}
+/* タグラインと見出し：明朝・ストローク・シャドウは共通。色だけタグラインは従来の茶 */
+.mv-tagline,
+.mv-headline {
+  filter: saturate(1.06);
+  font-family: var(--font-min);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.75;
+  -webkit-text-stroke: 0.35px rgba(0, 0, 0, 0.12);
+  paint-order: stroke fill;
   text-shadow:
     0 0 1px rgba(255, 255, 255, 0.95),
     0 1px 3px rgba(255, 255, 255, 0.82),
-    0 0 34px rgba(255, 252, 246, 0.6),
-    0 3px 15px rgba(0, 0, 0, 0.08);
+    0 0 28px rgba(255, 252, 246, 0.45),
+    0 2px 14px rgba(0, 0, 0, 0.05);
 }
-.mv h1 span {
-  display: inline-block;
-  color: var(--gray);
-  font-family: var(--font-en);
-  font-size: 18rem;
-  font-weight: 520;
-  margin-left: 20rem;
-  text-shadow:
-    0 0 1px rgba(255, 255, 255, 0.92),
-    0 1px 2px rgba(255, 255, 255, 0.78),
-    0 0 28px rgba(255, 253, 248, 0.52),
-    0 2px 12px rgba(0, 0, 0, 0.07);
-}
-.mv .lead{
-  display: block;
-  font-family: var(--font-min);
-  font-size: 36rem;
-  font-weight: 450;
-  letter-spacing: 0.1em;
-  line-height: 1.8;
-  color: var(--black-soft);
-  position: relative;
-  padding-bottom: 20rem;
-  margin-bottom: 30rem;
-  position: relative;
-  text-shadow:
-    0 0 1px rgba(255, 255, 255, 0.98),
-    0 1px 3px rgba(255, 255, 255, 0.88),
-    0 0 32px rgba(255, 253, 248, 0.68),
-    0 3px 18px rgba(0, 0, 0, 0.07);
-}
-.mv .lead b {
-  display: block;
-  font-weight: 450;
+.mv-tagline {
+  margin: 0 0 12rem;
+  font-size: 15.75rem;
   color: #6B5B4D;
-  text-shadow:
-    0 0 1px rgba(255, 255, 255, 0.95),
-    0 1px 3px rgba(255, 255, 255, 0.78),
-    0 0 28px rgba(255, 250, 242, 0.58),
-    0 2px 14px rgba(45, 35, 28, 0.12);
 }
-.mv .lead::after {
-  content: "";
-  display: block;
-  height: 1rem;
-  position: absolute;
-  left: 0;
-  top: 100%;
+.mv-headline {
+  margin: 0 0 28rem;
+  font-size: clamp(27.3rem, 4.41vw, 39.9rem);
+  color: var(--black-soft);
 }
-.mv .lead::after {
-  background: linear-gradient(90deg,var(--gold-dark),var(--cream));
-  width: 100%;
-}
-.mv .txtopen p {
-  font-weight: 450;
-  text-shadow:
-    0 0 1px rgba(255, 255, 255, 0.96),
-    0 1px 2px rgba(255, 255, 255, 0.75),
-    0 0 22px rgba(255, 252, 248, 0.5),
-    0 2px 10px rgba(0, 0, 0, 0.06);
-}
-.mv .btn {
-  font-weight: 530;
-  box-shadow:
-    0 4px 22px rgba(0, 0, 0, 0.1),
-    0 2px 10px rgba(0, 0, 0, 0.06),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.14);
-}
-.mv .btn:hover {
-  box-shadow:
-    0 6px 26px rgba(0, 0, 0, 0.12),
-    0 2px 12px rgba(0, 0, 0, 0.07),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+/* 見本どおりの改行は SP のみ（PC は一行のまま） */
+.mv-headline__break {
+  display: none;
 }
 .txtopen {
   width: min(100%,390rem);
@@ -689,55 +768,257 @@ footer .copy {
   color: var(--gray);
   text-align: center;
 }
+/*
+ * SP の MV のみ（767px 未満）。
+ * 参照PNG：白ボックスはヘッダー直下ではなく肩〜胸付近（dvh で下げる）、
+ * キャッチはボックス直下・左端そろえ、見出しは「、」後改行。フォントサイズのみ現状維持。
+ */
 @media only screen and (max-width: 767px) {
-  /* ファーストビュー下端に OPEN記念キャンペーン（リボンタイトル）だけが覗くよう MV を短縮（数値は端末で微調整可） */
   .mv {
+    min-height: calc(100dvh - 96rem);
     height: calc(100dvh - 96rem);
   }
   .mv .inner {
-    justify-content: flex-end;
-    padding-bottom: 12rem;
+    justify-content: stretch;
+    align-items: stretch;
+    padding-bottom: 0;
   }
   .mv .txt {
+    min-height: calc(100dvh - 96rem - 64rem);
+    max-width: 100%;
     width: 100%;
+    margin-left: 0;
+    margin-right: auto;
+    padding: calc(64rem + 4rem) 18rem 18rem;
+    align-items: stretch;
+    justify-content: flex-start;
   }
-  .mv h1 {
-    font-size: 26rem;
-    margin-bottom: 20rem;
-    line-height: 1.2;
+  .mv-lower {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    position: relative;
+    justify-content: flex-end;
   }
-  .mv h1 b {
-    font-size: 16rem;
+  /* 白ボックスとコピーを予約ボタン直上に寄せる */
+  .mv-card {
+    --mv-s: 0.6;
+    flex-shrink: 0;
+    align-self: flex-start;
+    width: min(calc(60vw * var(--mv-s)), 100%);
+    max-width: 100%;
+    height: auto;
+    margin-left: 0;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 10rem;
+    overflow: visible;
   }
-  .mv h1 span {
-    font-size: 14rem;
-    margin-left: 16rem;
+  .mv-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    flex-shrink: 0;
+    margin-bottom: 10rem;
   }
-  .mv .lead{
-    font-size: 24rem;
-    line-height: 1.4;
-    padding-bottom: 12rem;
-    margin-bottom: 20rem;
+  .mv-tagline,
+  .mv-headline {
+    text-align: left;
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
   }
-  .mv .lead b {
-    font-size: 19rem;
-    margin-bottom: 8rem;
+  .mv-headline__break {
+    display: block;
   }
   .mv .btn {
-    width: calc(100% - 100rem);
-    padding-left: 0;
+    flex-shrink: 0;
+    margin-top: 0;
+    align-self: center;
+    width: calc(100% - 8rem);
+    max-width: 100%;
   }
-  .mv .btn::after {
-    content: none;
+  .mv-tagline {
+    font-size: 13.65rem;
+    line-height: 1.65;
+    margin-bottom: 10rem;
   }
-  .mv .btn span {
+  .mv-headline {
+    font-size: 23.1rem;
+    line-height: 1.65;
+    margin-top: 0;
+    margin-bottom: 12rem;
+  }
+}
+/* PC（768px以上）：MV のみ。コピーは下段の縦60%・カード左・ボタン下。文字色は共通スタイルのまま */
+@media (min-width: 768px) {
+  .mv {
+    --mv-header-offset: 72rem;
+    display: flex;
+    flex-direction: column;
+    /* MV の初期位置を固定ヘッダー直下に合わせる */
+    margin-top: var(--mv-header-offset);
+    min-height: max(760rem, calc(100dvh - 72rem));
+  }
+  .mv .inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    width: min(calc(100% - 40rem), 1200rem);
+  }
+  .mv .txt {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: none;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 40rem 36rem;
+    min-height: max(680rem, calc(100dvh - 72rem - 56rem));
+    text-align: left;
+    align-items: stretch;
+    position: relative;
+    box-sizing: border-box;
+  }
+  .mv-lower {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    min-height: 0;
+    align-items: stretch;
+  }
+  /* 左・「整える〜」と同じ縦位置。横:縦＝5:4（縦はコンテンツ＋上限は横キャップの 4/5） */
+  .mv-card {
+    /* 文字を含むカード全体をさらに 1.25 倍（合計 1.5625 倍） */
+    --mv-s: calc(0.75 * 1.25 * 1.25);
+    /* 画像内の肩ライン（この高さにカード下端を合わせる） */
+    --mv-shoulder-line: 57%;
+    --mv-card-cap: min(calc(68vw * var(--mv-s)), 100%);
+    position: absolute;
+    /* 画面全体（ビューポート）基準で左から 1/5 の位置に固定 */
+    left: calc(100vw / 5 - (100vw - min(1200rem, calc(100vw - 40rem))) / 2 - 40rem);
+    /* 下端を肩ラインに合わせるため、top を肩に置いて上方向へカード高ぶん移動 */
+    top: var(--mv-shoulder-line);
+    transform: translateY(-100%);
+    margin: 0;
+    z-index: 2;
+    box-sizing: border-box;
+    max-width: var(--mv-card-cap);
+    width: auto;
+    height: auto;
+    min-width: 0;
+    overflow: visible;
+    /* 上下余白を同値にして縦の見た目を短く整える */
+    padding: calc(5rem * var(--mv-s)) calc(16rem * var(--mv-s));
+  }
+  /* PC: MVカードは最終配置を固定し、アニメはフェードのみ */
+  .mv-card.fade-l {
+    transform: translate(-20rem, -100%);
+    opacity: 0;
+    transition: 0.6s ease-out;
+  }
+  .mv-card.fade-l.active {
+    transform: translate(0, -100%);
+    opacity: 1;
+  }
+  .mv-card .mv-features li {
+    justify-content: flex-start;
+    padding: calc(10rem * var(--mv-s)) 0;
+  }
+  .mv-card .mv-features li:last-child {
+    border-bottom: none;
+    padding-bottom: calc(10rem * var(--mv-s));
+  }
+  /* 02はPCで1行固定（末尾に1文字ぶん余白） */
+  .mv-features__txt--pilates {
+    white-space: nowrap;
+    padding-right: 1em;
+  }
+  .mv-features__txt--pilates br {
     display: none;
   }
-  .mv .txtopen {
-    width: calc(100% - 100rem);
+  /* コピー：.mv-lower 高さの 60% で「整える〜」先頭。文頭はビューポート左 1/4（.mv .inner と左パディング40を控除） */
+  .mv-copy {
+    display: block;
+    position: absolute;
+    top: var(--mv-align-top);
+    left: calc(100vw / 4 - (100vw - min(1200rem, calc(100vw - 40rem))) / 2 - 40rem);
+    margin: 0;
+    width: min(92%, 880rem);
+    max-width: calc(100% - 8rem);
+    text-align: left;
+    z-index: 3;
   }
-  .mv .txtopen p {
+  /* 色はベース維持。タグラインは従来 38rem の 1.05 倍 */
+  .mv-tagline {
+    margin: 0 0 10rem;
+    font-size: 39.9rem;
+  }
+  .mv-headline {
+    margin: 0 0 20rem;
+    white-space: nowrap;
+  }
+  /* CTA：ヘッダー相当サイズ＋拡大は PC のみ。下端配置 */
+  .mv .btn {
+    width: auto;
+    min-width: calc(188rem * 1.1 * 1.1);
+    max-width: min(calc(280rem * 1.1 * 1.1), calc((100vw - 240rem) * 1.1 * 1.1));
+    margin: 0 auto;
+    font-weight: 500;
+    font-size: 13rem;
+    padding: 12rem 38rem 12rem 38rem;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      0 2px 10px rgba(255, 255, 255, 0.14),
+      0 1px 4px rgba(255, 253, 248, 0.12),
+      0 4px 20px rgba(43, 30, 22, 0.16),
+      0 1px 4px rgba(0, 0, 0, 0.06);
+    margin-top: auto;
+    align-self: center;
+    position: relative;
+    z-index: 4;
+    flex-shrink: 0;
+  }
+  .mv .btn::before {
+    left: 10rem;
+    width: 21rem;
+    height: 21rem;
+    border-radius: 3rem;
+  }
+  .mv .btn::after {
+    right: 12rem;
     font-size: 12rem;
+  }
+  .mv .btn:hover {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.12),
+      0 3px 14px rgba(255, 255, 255, 0.18),
+      0 1px 5px rgba(255, 253, 248, 0.14),
+      0 6px 24px rgba(43, 30, 22, 0.2),
+      0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  /* PC初期表示：背景の開始位置もヘッダー直下基準に固定 */
+  .bg-slide li {
+    transform: none;
+    animation: mv-bg-reveal-pc 1.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+}
+@keyframes mv-bg-reveal-pc {
+  0% {
+    opacity: 0;
+    transform: none;
+    filter: none;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 }
 .bg-slide {
@@ -749,36 +1030,7 @@ footer .copy {
   left: 0;
   z-index: -1;
 }
-.bg-slide::after {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 100%;
-  /* 下層：縦グラデ／上層：リード付近の放射（線形は据え置き・放射のみ微調整可） */
-  background-image:
-    radial-gradient(
-      ellipse 105% 42% at 72% 74%,
-      rgba(128, 100, 108, 0.4) 0%,
-      rgba(145, 118, 126, 0.22) 40%,
-      transparent 62%
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(238, 232, 222, 0.08) 0%,
-      rgba(236, 230, 224, 0.11) 26%,
-      rgba(234, 228, 222, 0.13) 34%,
-      rgba(216, 200, 204, 0.17) 40%,
-      rgba(190, 168, 174, 0.28) 68%,
-      rgba(158, 128, 136, 0.38) 100%
-    );
-  background-color: transparent;
-  opacity: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 5;
-}
-/* MV背景：浮かび上がりのみ（画像に filter ぼかしなし） */
+/* MV背景：ベージュオーバーレイなし・写真は filter / opacity なし */
 @keyframes mv-bg-reveal {
   0% {
     opacity: 0;
@@ -815,9 +1067,9 @@ footer .copy {
   object-fit: cover;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  /* 彩度をやや下げ＋写真自体をほんの少し薄く（opacity のみ微調整） */
-  filter: saturate(0.88);
-  opacity: 0.87;
+  /* 明度・彩度とも 100%（元画像どおり） */
+  filter: none;
+  opacity: 1;
 }
 @media (prefers-reduced-motion: reduce) {
   .bg-slide li {
@@ -828,74 +1080,13 @@ footer .copy {
   }
 }
 @media only screen and (max-width: 767px) {
-  .bg-slide  {
+  .bg-slide {
     opacity: 1;
   }
-  .bg-slide::after {
-    background-image:
-      radial-gradient(
-        ellipse 130% 40% at 50% 66%,
-        rgba(128, 100, 108, 0.41) 0%,
-        rgba(145, 118, 126, 0.23) 38%,
-        transparent 60%
-      ),
-      linear-gradient(
-        to bottom,
-        rgba(238, 232, 222, 0.08) 0%,
-        rgba(236, 230, 224, 0.11) 26%,
-        rgba(234, 228, 222, 0.13) 34%,
-        rgba(216, 200, 204, 0.17) 40%,
-        rgba(190, 168, 174, 0.28) 68%,
-        rgba(158, 128, 136, 0.38) 100%
-      );
-  }
-}
-.scroll-down {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 110rem;
-  height: 110rem;
-  border-radius: 50%;
-  border: var(--gold) 1px solid;
-  font-family: var(--font-en);
-  font-size: 16rem;
-  font-weight: 400;
-  line-height: 1.3;
-  color: var(--gold);
-  position: absolute;
-  right: 52rem;
-  bottom: 22rem;
-  transition: .3s;
-  z-index: 5;
-}
-.scroll-down::after {
-  content: "";
-  display: block;
-  width: 1rem;
-  height: 42rem;
-  position: absolute;
-  top: 90rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--gold);
-  transition: .3s;
-}
-.scroll-down:hover {
-  background: rgba(245, 240, 232,.5);
-}
-.scroll-down:hover::after {
-    transform: translateX(-50%) translateY(100%);
-}
-@media only screen and (max-width: 767px) {
-  .scroll-down {
-    width: 90rem;
-    height: 90rem;
-    bottom: 22rem;
-    right: 19rem;
-  }
-  .scroll-down::after {
-    top: 70rem;
+  .bg-slide li img {
+    object-fit: cover;
+    object-position: 66.67% 24%;
+    transform: none;
   }
 }
 /* The Problem */
