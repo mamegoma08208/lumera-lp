@@ -112,21 +112,21 @@ iframe {
   width: min(calc(100% - 40rem),1200rem);
   margin: auto;
 }
-/* LINE CTA：濃茶ボディ＋左にLINE緑スクエア＋右矢印（サイト共通） */
+/* LINE CTA：濃茶ボディ＋右矢印（サイト共通） */
 .btn {
   display: flex;
   justify-content: center;
   align-items: center;
   width: min(100%, 390rem);
-  min-height: 68rem;
-  padding: 12rem 52rem 12rem 50rem;
+  min-height: 64rem;
+  padding: 10rem 40rem;
   position: relative;
   box-sizing: border-box;
   color: var(--white);
   background: var(--btn-brand);
   font-family: var(--font-jp);
   font-weight: 500;
-  font-size: 16rem;
+  font-size: 15rem;
   letter-spacing: 0.06em;
   line-height: 1.35;
   text-decoration: none;
@@ -140,19 +140,8 @@ iframe {
     0 2px 10px rgba(255, 255, 255, 0.14),
     0 1px 4px rgba(255, 253, 248, 0.12);
 }
-/* LINEアイコン風スクエア（やや小さめ） */
 .btn::before {
-  content: "";
-  position: absolute;
-  left: 16rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 26rem;
-  height: 26rem;
-  border-radius: 4rem;
-  background: var(--line-green);
-  flex-shrink: 0;
-  pointer-events: none;
+  content: none;
 }
 .btn::after {
   content: "→";
@@ -182,15 +171,9 @@ iframe {
 }
 @media only screen and (max-width: 767px) {
   .btn {
-    min-height: 64rem;
-    padding: 10rem 44rem 10rem 44rem;
-    font-size: 15rem;
-  }
-  .btn::before {
-    left: 12rem;
-    width: 24rem;
-    height: 24rem;
-    border-radius: 3rem;
+    min-height: 60rem;
+    padding: 9rem 36rem;
+    font-size: 14rem;
   }
   .btn::after {
     right: 16rem;
@@ -343,12 +326,12 @@ header .logo:hover .logo__branch {
 }
 header .btn {
   width: auto;
-  min-width: 188rem;
-  max-width: min(280rem, calc(100vw - 240rem));
-  min-height: 48rem;
+  min-width: 138rem;
+  max-width: min(190rem, calc(100vw - 260rem));
+  min-height: 40rem;
   height: auto;
-  font-size: 13rem;
-  padding: 8rem 38rem 8rem 38rem;
+  font-size: 12rem;
+  padding: 6rem 30rem;
 }
 header .btn::before {
   left: 10rem;
@@ -357,8 +340,7 @@ header .btn::before {
   border-radius: 3rem;
 }
 header .btn::after {
-  right: 12rem;
-  font-size: 12rem;
+  content: none;
 }
 .gnav {
   display: flex;
@@ -397,22 +379,15 @@ header .btn::after {
   }
   header .btn {
     min-width: 0;
-    max-width: calc(100vw - 148rem);
-    min-height: 40rem;
-    font-size: 11rem;
+    max-width: calc(100vw - 164rem);
+    min-height: 34rem;
+    font-size: 10rem;
     letter-spacing: 0.04em;
-    padding: 6rem 30rem 6rem 32rem;
+    padding: 5rem 24rem;
     text-align: center;
   }
-  header .btn::before {
-    left: 7rem;
-    width: 18rem;
-    height: 18rem;
-    border-radius: 3rem;
-  }
   header .btn::after {
-    right: 10rem;
-    font-size: 11rem;
+    content: none;
   }
   .gnav {
     display: none;
@@ -629,6 +604,21 @@ footer .copy {
   position: relative;
   z-index: 1;
 }
+.mv::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* 背景を上から下へ白くして文字可読性を上げる */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.18) 32%,
+    rgba(255, 255, 255, 0.44) 64%,
+    rgba(255, 255, 255, 0.72) 100%
+  );
+}
 .mv .inner {
   width: min(calc(100% - 40rem), 1200rem);
   margin: 0 auto;
@@ -658,65 +648,59 @@ footer .copy {
 /* タグライン直上・相似比（--mv-s）。0.75 = 従来 0.6 の 1.25 倍でボックス・文字とも相似拡大 */
 .mv-card {
   --mv-s: 0.75;
-  width: min(calc(60vw * var(--mv-s)), 100%);
+  width: min(100%, 560rem);
   max-width: 100%;
-  margin-right: auto;
-  margin-left: 0;
-  margin-bottom: calc(10rem * var(--mv-s));
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: calc(12rem * var(--mv-s));
-  padding: calc(6rem * var(--mv-s)) calc(16rem * var(--mv-s)) calc(8rem * var(--mv-s));
-  box-shadow:
-    0 1px calc(18rem * var(--mv-s)) rgba(43, 30, 22, 0.06),
-    0 0 0 1px rgba(255, 255, 255, 0.9);
+  margin: 0 auto 12rem;
+  background: transparent;
+  border-radius: 0;
+  border-top: 1px solid rgba(43, 30, 22, 0.24);
+  border-bottom: 1px solid rgba(43, 30, 22, 0.24);
+  padding: 12rem 0;
+  box-shadow: none;
 }
 .mv-features {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .mv-card .mv-features li {
   display: flex;
-  align-items: flex-start;
-  gap: calc(14rem * var(--mv-s));
-  padding: calc(12rem * var(--mv-s)) 0;
-  border-bottom: 1px solid rgba(43, 30, 22, 0.1);
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5rem;
+  padding: 0 10rem;
+  border-bottom: none;
+  border-right: 1px solid rgba(43, 30, 22, 0.24);
   font-family: var(--font-jp);
-  font-size: calc(15rem * var(--mv-s));
+  font-size: 13rem;
   font-weight: 400;
-  letter-spacing: 0.04em;
-  line-height: 1.5;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
   color: var(--black-soft);
+  text-align: center;
 }
-/* 02：× の直後で改行（マークアップの br 固定） */
+.mv-card .mv-features li:last-child {
+  border-right: none;
+}
+.mv-features__label {
+  display: block;
+  font-family: var(--font-en);
+  font-size: 10rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  line-height: 1.1;
+  color: rgba(43, 30, 22, 0.72);
+}
 .mv-features__txt--pilates {
   word-break: keep-all;
 }
-/* 03：幅が足りないときだけ「から」の直後で改行 */
-.mv-features__txt--access {
-  word-break: keep-all;
-}
-.mv-features__access-pre {
-  white-space: nowrap;
-}
-.mv-card .mv-features li:last-child {
-  border-bottom: none;
-  padding-bottom: calc(8rem * var(--mv-s));
-}
-.mv-card .mv-features__num {
-  flex: 0 0 auto;
-  font-family: var(--font-en);
-  font-size: calc(20rem * var(--mv-s));
-  font-weight: 600;
-  line-height: 1;
-  color: var(--gold);
-  min-width: calc(36rem * var(--mv-s));
-}
 .mv-features__txt {
-  flex: 1;
-  min-width: 0;
+  font-size: 13rem;
+  line-height: 1.35;
+  white-space: nowrap;
 }
 .mv-lower {
   flex: 0 0 auto;
@@ -803,17 +787,11 @@ footer .copy {
   }
   /* 白ボックスとコピーを予約ボタン直上に寄せる */
   .mv-card {
-    --mv-s: 0.6;
     flex-shrink: 0;
-    align-self: flex-start;
-    width: min(calc(60vw * var(--mv-s)), 100%);
-    max-width: 100%;
-    height: auto;
-    margin-left: 0;
-    margin-right: auto;
-    margin-top: 0;
+    align-self: center;
+    width: min(100%, 560rem);
     margin-bottom: 10rem;
-    overflow: visible;
+    padding-top: 10rem;
   }
   .mv-copy {
     display: flex;
@@ -821,7 +799,7 @@ footer .copy {
     align-items: flex-start;
     width: 100%;
     flex-shrink: 0;
-    margin-bottom: 10rem;
+    margin-bottom: 8rem;
   }
   .mv-tagline,
   .mv-headline {
@@ -838,19 +816,38 @@ footer .copy {
     flex-shrink: 0;
     margin-top: 0;
     align-self: center;
-    width: calc(100% - 8rem);
-    max-width: 100%;
+    /* 文字1行が収まる実寸＋左右に少し余白 */
+    width: max-content;
+    max-width: calc(100% - 78rem);
+    min-height: 47rem;
+    padding: 7.5rem 30rem;
+    font-size: 14rem;
+    border-radius: 8.4rem;
+    white-space: nowrap;
+  }
+  .mv .btn::after {
+    content: none;
   }
   .mv-tagline {
     font-size: 13.65rem;
     line-height: 1.65;
-    margin-bottom: 10rem;
+    margin-bottom: 8rem;
   }
   .mv-headline {
     font-size: 23.1rem;
     line-height: 1.65;
     margin-top: 0;
-    margin-bottom: 12rem;
+    margin-bottom: 10rem;
+  }
+  .mv-card .mv-features li {
+    padding: 0 6rem;
+    gap: 4rem;
+  }
+  .mv-features__label {
+    font-size: 8.8rem;
+  }
+  .mv-features__txt {
+    font-size: 11.4rem;
   }
 }
 /* PC（768px以上）：MV のみ。コピーは下段の縦60%・カード左・ボタン下。文字色は共通スタイルのまま */
@@ -892,116 +889,73 @@ footer .copy {
     width: 100%;
     min-height: 0;
     align-items: stretch;
+    justify-content: flex-end;
   }
-  /* 左・「整える〜」と同じ縦位置。横:縦＝5:4（縦はコンテンツ＋上限は横キャップの 4/5） */
+  /* PCも見本同様：見出し下に情報帯を差し込む */
   .mv-card {
-    /* 文字を含むカード全体をさらに 1.25 倍（合計 1.5625 倍） */
-    --mv-s: calc(0.75 * 1.25 * 1.25);
-    /* 画像内の肩ライン（この高さにカード下端を合わせる） */
-    --mv-shoulder-line: 57%;
-    --mv-card-cap: min(calc(68vw * var(--mv-s)), 100%);
-    position: absolute;
-    /* 画面全体（ビューポート）基準で左から 1/5 の位置に固定 */
-    left: calc(100vw / 5 - (100vw - min(1200rem, calc(100vw - 40rem))) / 2 - 40rem);
-    /* 下端を肩ラインに合わせるため、top を肩に置いて上方向へカード高ぶん移動 */
-    top: var(--mv-shoulder-line);
-    transform: translateY(-100%);
-    margin: 0;
+    position: static;
+    left: auto;
+    top: auto;
+    transform: none;
+    margin: 0 auto 16rem;
     z-index: 2;
-    box-sizing: border-box;
-    max-width: var(--mv-card-cap);
-    width: auto;
-    height: auto;
-    min-width: 0;
-    overflow: visible;
-    /* 上下余白を同値にして縦の見た目を短く整える */
-    padding: calc(5rem * var(--mv-s)) calc(16rem * var(--mv-s));
+    width: min(100%, 760rem);
+    max-width: 100%;
+    padding-top: 10rem;
   }
-  /* PC: MVカードは最終配置を固定し、アニメはフェードのみ */
   .mv-card.fade-l {
-    transform: translate(-20rem, -100%);
+    transform: translateX(-20rem);
     opacity: 0;
     transition: 0.6s ease-out;
   }
   .mv-card.fade-l.active {
-    transform: translate(0, -100%);
+    transform: translateX(0);
     opacity: 1;
   }
   .mv-card .mv-features li {
-    justify-content: flex-start;
-    padding: calc(10rem * var(--mv-s)) 0;
+    padding: 0 8rem;
+    gap: 4rem;
   }
-  .mv-card .mv-features li:last-child {
-    border-bottom: none;
-    padding-bottom: calc(10rem * var(--mv-s));
+  .mv-features__label {
+    font-size: 11rem;
   }
-  /* 02はPCで1行固定（末尾に1文字ぶん余白） */
-  .mv-features__txt--pilates {
-    white-space: nowrap;
-    padding-right: 1em;
+  .mv-features__txt {
+    font-size: 14rem;
   }
-  .mv-features__txt--pilates br {
-    display: none;
-  }
-  /* コピー：.mv-lower 高さの 60% で「整える〜」先頭。文頭はビューポート左 1/4（.mv .inner と左パディング40を控除） */
   .mv-copy {
     display: block;
-    position: absolute;
-    top: var(--mv-align-top);
-    left: calc(100vw / 4 - (100vw - min(1200rem, calc(100vw - 40rem))) / 2 - 40rem);
-    margin: 0;
-    width: min(92%, 880rem);
-    max-width: calc(100% - 8rem);
+    position: static;
+    margin: 0 auto 10rem;
+    width: min(92%, 760rem);
+    max-width: 100%;
     text-align: left;
     z-index: 3;
   }
-  /* 色はベース維持。タグラインは従来 38rem の 1.05 倍 */
   .mv-tagline {
-    margin: 0 0 10rem;
+    margin: 0 0 8rem;
     font-size: 39.9rem;
   }
   .mv-headline {
-    margin: 0 0 20rem;
+    margin: 0 0 10rem;
     white-space: nowrap;
   }
   /* CTA：ヘッダー相当サイズ＋拡大は PC のみ。下端配置 */
   .mv .btn {
-    width: auto;
-    min-width: calc(188rem * 1.1 * 1.1);
-    max-width: min(calc(280rem * 1.1 * 1.1), calc((100vw - 240rem) * 1.1 * 1.1));
+    width: min(100%, 390rem);
+    min-width: 0;
+    max-width: 100%;
     margin: 0 auto;
     font-weight: 500;
-    font-size: 13rem;
-    padding: 12rem 38rem 12rem 38rem;
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.1),
-      0 2px 10px rgba(255, 255, 255, 0.14),
-      0 1px 4px rgba(255, 253, 248, 0.12),
-      0 4px 20px rgba(43, 30, 22, 0.16),
-      0 1px 4px rgba(0, 0, 0, 0.06);
-    margin-top: auto;
+    font-size: 15rem;
+    padding: 10rem 40rem;
+    margin-top: 0;
     align-self: center;
     position: relative;
     z-index: 4;
     flex-shrink: 0;
   }
-  .mv .btn::before {
-    left: 10rem;
-    width: 21rem;
-    height: 21rem;
-    border-radius: 3rem;
-  }
   .mv .btn::after {
-    right: 12rem;
-    font-size: 12rem;
-  }
-  .mv .btn:hover {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.12),
-      0 3px 14px rgba(255, 255, 255, 0.18),
-      0 1px 5px rgba(255, 253, 248, 0.14),
-      0 6px 24px rgba(43, 30, 22, 0.2),
-      0 2px 8px rgba(0, 0, 0, 0.08);
+    content: none;
   }
   /* PC初期表示：背景の開始位置もヘッダー直下基準に固定 */
   .bg-slide li {
