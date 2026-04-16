@@ -2062,6 +2062,23 @@ footer .copy {
   font-size: 22rem;
   letter-spacing: 0.15em;
 }
+@media (min-width: 768px) {
+  .campaign {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .campaign .ribbon,
+  .campaign h4 {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  /* 「当日入会で」以降を少し下げる */
+  .campaign-price {
+    margin-top: -10rem;
+  }
+}
 @media only screen and (max-width: 767px) {
   .campaign {
     border-width: 3rem;
