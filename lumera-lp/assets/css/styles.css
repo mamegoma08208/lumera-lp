@@ -343,10 +343,7 @@ header .btn::after {
   content: none;
 }
 .gnav {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-right: 10rem;
+  display: none;
 }
 .gnav li {
   display: block;
@@ -385,6 +382,7 @@ header .btn::after {
     letter-spacing: 0.04em;
     padding: 5rem 24rem;
     text-align: center;
+    margin-right: 20rem;
   }
   header .btn::after {
     content: none;
@@ -393,13 +391,7 @@ header .btn::after {
     display: none;
   }
   .menubtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 64rem;
-    height: 64rem;
-    position: relative;
+    display: none;
   }
   .menubtn span {
     display: block;
@@ -428,18 +420,7 @@ header .btn::after {
     opacity: 0;
   }
   .spnav {
-    display: block;
-    width: 100%;
-    height: calc(100dvh - 64px);
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: var(--cream);
-    padding: 40rem 36rem 0;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.3s;
+    display: none;
   }
   .spnav.is-open {
     opacity: 1;
